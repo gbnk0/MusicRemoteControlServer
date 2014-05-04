@@ -20,8 +20,17 @@ class CmdBrowse:
 
     def process(self):
         try:
+            # MrcLogger.debug('CmdBrowse process('+self.query.path+')')
             for f in os.listdir(MrcSettings.BASE_MUSIC_PATH+self.query.path):
-                if os.path.isdir(MrcSettings.BASE_MUSIC_PATH+self.query.path+f) or f.endswith('.mp3') or f.endswith('.ogg'):
+                if os.path.isdir(MrcSettings.BASE_MUSIC_PATH+self.query.path+MrcSettings.OS_SEPARATOR+f):
                     self.reply.files.append(f)
+                else:
+                    ismusicfile=False
+                    for ext in MrcSettings.MUSIC_FILE_EXTENSIONS:
+                        if f.endswith(ext):
+                            ismusicfile=True
+                            break
+                    if ismusicfile:
+                        self.reply.files.append(f)
         except Exception as e:
             self.reply.error=e.__str__()

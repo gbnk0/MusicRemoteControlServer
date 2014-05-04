@@ -4,6 +4,7 @@ import time
 
 import MrcLogger
 import MrcHttpServer
+import MrcPlayer
 
 ###################
 
@@ -45,6 +46,8 @@ except ValueError:
 httpserverthread = MrcHttpServer.MrcHTTPServerThread(portnum)
 httpserverthread.start()
 
+MrcPlayer.instance().wakeUp()
+
 time.sleep(2)
 
 userinput=''
@@ -52,10 +55,12 @@ while(not userinput):
     sys.stdout.write(' > ')
     userinput=sys.stdin.readline()
     if(not interpret(userinput)):
-        httpserverthread.server.shutdown()
         break
     userinput=''
 
+MrcPlayer.instance().goToSleep()
+httpserverthread.server.shutdown()
 
+time.sleep(2)
 print 'Thanks for using MusicRemoteControlServer! See you soon!'
 exit()

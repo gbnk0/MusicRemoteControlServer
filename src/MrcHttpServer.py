@@ -106,8 +106,8 @@ class MrcHTTPServerThread(threading.Thread):
     def run(self):
         self.server = MrcThreadedHTTPServer(('', self.portnum), MrcHTTPHandler)
         sa=self.server.socket.getsockname()
-        print ' ... HTTP server launched on '+str(sa[0])+' port '+str(sa[1])+'...'
-        MrcLogger.info(' ... HTTP server launched on '+str(sa[0])+' port '+str(sa[1])+'...')
+        print ' ... HTTP server launched on '+str(sa[0])+' port '+str(sa[1])+' ...'
+        MrcLogger.info(' ... HTTP server launched on '+str(sa[0])+' port '+str(sa[1])+' ...')
         self.server.serve_forever()
         print ' ... HTTP server stopped ...'
         MrcLogger.info(' ... HTTP server stopped ...')

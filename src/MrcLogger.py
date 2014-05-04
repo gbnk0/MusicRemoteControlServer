@@ -24,3 +24,8 @@ def error(line):
     startToLog()
     MrcLog.write(str(datetime.datetime.now()) + ' [ERROR] ' + line + '\n')
     stopToLog()
+
+def debug(line):
+    startToLog()
+    MrcLog.write(str(datetime.datetime.now()) + ' [DEBUG] ' + line + '\n')
+    stopToLog()
