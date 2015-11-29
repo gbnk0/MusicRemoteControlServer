@@ -4,6 +4,13 @@ import jsonpickle
 from CmdBrowse import CmdBrowse
 from CmdPlayFile import CmdPlayFile
 from CmdPlayDir import CmdPlayDir
+from CmdPlayList import CmdPlayList
+from CmdPrev import CmdPrev
+from CmdNext import CmdNext
+from CmdPause import CmdPause
+from CmdUnpause import CmdUnpause
+from CmdVolumeUp import CmdVolumeUp
+from CmdVolumeDown import CmdVolumeDown
 
 class MrcCommander:
 
@@ -50,3 +57,46 @@ class MrcCommander:
             c.process()
             self.res=jsonpickle.encode(c.reply, unpicklable=False)
             return
+
+        if self.cmd['command']=='PlayList':
+            c=CmdPlayList()
+            c.process()
+            self.res=jsonpickle.encode(c.reply, unpicklable=False)
+            return
+
+        if self.cmd['command']=='Prev':
+            c=CmdPrev()
+            c.process()
+            self.res=jsonpickle.encode(c.reply, unpicklable=False)
+            return
+
+        if self.cmd['command']=='Next':
+            c=CmdNext()
+            c.process()
+            self.res=jsonpickle.encode(c.reply, unpicklable=False)
+            return
+
+        if self.cmd['command']=='Pause':
+            c=CmdPause()
+            c.process()
+            self.res=jsonpickle.encode(c.reply, unpicklable=False)
+            return
+
+        if self.cmd['command']=='Unpause':
+            c=CmdUnpause()
+            c.process()
+            self.res=jsonpickle.encode(c.reply, unpicklable=False)
+            return
+
+        if self.cmd['command']=='VolumeUp':
+            c=CmdVolumeUp()
+            c.process()
+            self.res=jsonpickle.encode(c.reply, unpicklable=False)
+            return
+
+        if self.cmd['command']=='VolumeDown':
+            c=CmdVolumeDown()
+            c.process()
+            self.res=jsonpickle.encode(c.reply, unpicklable=False)
+            return
+

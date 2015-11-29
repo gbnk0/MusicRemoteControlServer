@@ -4,6 +4,7 @@ import threading
 import pygame
 import MrcLogger
 from MrcPlayList import MrcPlayList
+import MrcSettings
 
 class MrcPlayer:
 
@@ -167,6 +168,54 @@ class MrcPlayer:
         except Exception as e:
             MrcLogger.error('Exception caught in MrcPlayer.unpause: '+e.__str__())
 
+    def getPlayList(self):
+        try:
+            with self.lock:
+                if not self.wokenUp:
+                    MrcLogger.error('MrcPlayer.getPlayList called while wokenUp is False! Not getting playlist...')
+                    return None, -1, False, 'Player not woken up, please try again later'
+                files = []
+                for f in self.playlist.files:
+                    if f.startswith(MrcSettings.BASE_MUSIC_PATH):
+                          files.append(f[len(MrcSettings.BASE_MUSIC_PATH):])  
+                return files, self.playlist.current, self.pausing, ''
+        except pygame.error as e:
+            MrcLogger.error('pygame.error caught in MrcPlayer.getPlayList: '+e.__str__())
+        except Exception as e:
+            MrcLogger.error('Exception caught in MrcPlayer.getPlayList: '+e.__str__())
+
+    def setVolumeUp(self):
+        try:
+            with self.lock:
+                if not self.wokenUp:
+                    MrcLogger.error('MrcPlayer.setVolumeUp called while wokenUp is False! Not setting volume up...')
+                    return
+                currentVolume = pygame.mixer.music.get_volume()
+                if currentVolume < 0.95:
+                    pygame.mixer.music.set_volume(currentVolume+0.05)
+                elif currentVolume != 1.0:
+                    pygame.mixer.music.set_volume(1.0)
+        except pygame.error as e:
+            MrcLogger.error('pygame.error caught in MrcPlayer.setVolumeUp: '+e.__str__())
+        except Exception as e:
+            MrcLogger.error('Exception caught in MrcPlayer.setVolumeUp: '+e.__str__())
+
+    def setVolumeDown(self):
+        try:
+            with self.lock:
+                if not self.wokenUp:
+                    MrcLogger.error('MrcPlayer.setVolumeDown called while wokenUp is False! Not setting volume down...')
+                    return
+                currentVolume = pygame.mixer.music.get_volume()
+                if currentVolume > 0.05:
+                    pygame.mixer.music.set_volume(currentVolume-0.05)
+                elif currentVolume != 0.0:
+                    pygame.mixer.music.set_volume(0.0)
+        except pygame.error as e:
+            MrcLogger.error('pygame.error caught in MrcPlayer.setVolumeDown: '+e.__str__())
+        except Exception as e:
+            MrcLogger.error('Exception caught in MrcPlayer.setVolumeDown: '+e.__str__())
+ 
 
     # TEST METHOD #
     def testStuff():

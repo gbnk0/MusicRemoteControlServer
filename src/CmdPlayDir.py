@@ -28,13 +28,15 @@ class CmdPlayDir:
             self.reply.error=e.__str__()
 
     def gatherMusicFiles(self, dirPath):
-        for f in os.listdir(MrcSettings.BASE_MUSIC_PATH+dirPath):
+        dirlisting = os.listdir(MrcSettings.BASE_MUSIC_PATH+dirPath)
+        dirlisting.sort()
+        for f in dirlisting:
             if os.path.isdir(MrcSettings.BASE_MUSIC_PATH+dirPath+MrcSettings.OS_SEPARATOR+f):
                 self.gatherMusicFiles(dirPath+MrcSettings.OS_SEPARATOR+f)
             else:
                 ismusicfile=False
                 for ext in MrcSettings.MUSIC_FILE_EXTENSIONS:
-                    if f.endswith(ext):
+                    if f.lower().endswith(ext):
                         ismusicfile=True
                         break
                 if ismusicfile:

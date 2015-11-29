@@ -2,6 +2,7 @@ from BaseHTTPServer import HTTPServer, BaseHTTPRequestHandler
 from SocketServer import ThreadingMixIn
 import threading
 import urlparse
+import MrcSettings
 import MrcLogger
 from MrcCommander import MrcCommander
 
@@ -52,8 +53,9 @@ class MrcHTTPHandler(BaseHTTPRequestHandler):
                 MrcLogger.error('QUERY: INVALID! No line in HTTPHandler\'s rfile could pass analysis!')
                 MrcLogger.error(wholerfile)
                 break
+            MrcLogger.error('QUERY: '+inputline+' is not parseable')
 
-        if mc.cmd:
+        if mc.cmd and len(mc.cmd)!=0:
             mc.process()
 
         reply=mc.res
@@ -62,6 +64,7 @@ class MrcHTTPHandler(BaseHTTPRequestHandler):
         MrcLogger.info('REPLY: '+reply)
 
         self.send_response(200)
+        self.send_header('Access-Control-Allow-Origin', 'http://'+MrcSettings.BASE_WEBSERVER_HOST)
         self.end_headers()
         self.wfile.write(reply)
         return

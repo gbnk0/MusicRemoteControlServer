@@ -2,8 +2,9 @@ import sys
 import os
 import datetime
 import threading
+import MrcSettings
 
-MrcLogFilePath='../log/log.txt'
+MrcLogFilePath=MrcSettings.BASE_LOG_PATH+'log.txt'
 MrcLogLock=threading.Lock()
 MrcLog=open(MrcLogFilePath,'a')
 

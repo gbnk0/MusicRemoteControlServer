@@ -27,10 +27,11 @@ class CmdBrowse:
                 else:
                     ismusicfile=False
                     for ext in MrcSettings.MUSIC_FILE_EXTENSIONS:
-                        if f.endswith(ext):
+                        if f.lower().endswith(ext):
                             ismusicfile=True
                             break
                     if ismusicfile:
                         self.reply.files.append(f)
+            self.reply.files.sort()
         except Exception as e:
             self.reply.error=e.__str__()

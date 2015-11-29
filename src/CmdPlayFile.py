@@ -19,7 +19,7 @@ class CmdPlayFile:
         try:
             ismusicfile=False
             for ext in MrcSettings.MUSIC_FILE_EXTENSIONS:
-                if self.query.path.endswith(ext):
+                if self.query.path.lower().endswith(ext):
                     ismusicfile=True
                     break
             if ismusicfile:

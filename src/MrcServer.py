@@ -50,17 +50,17 @@ MrcPlayer.instance().wakeUp()
 
 time.sleep(2)
 
-userinput=''
-while(not userinput):
-    sys.stdout.write(' > ')
-    userinput=sys.stdin.readline()
-    if(not interpret(userinput)):
-        break
-    userinput=''
+# userinput=''
+# while(not userinput):
+#     sys.stdout.write(' > ')
+#     userinput=sys.stdin.readline()
+#     if(not interpret(userinput)):
+#         break
+#     userinput=''
 
-MrcPlayer.instance().goToSleep()
-httpserverthread.server.shutdown()
+# MrcPlayer.instance().goToSleep()
+# httpserverthread.server.shutdown()
 
-time.sleep(2)
-print 'Thanks for using MusicRemoteControlServer! See you soon!'
-exit()
+# time.sleep(2)
+# print 'Thanks for using MusicRemoteControlServer! See you soon!'
+# exit()
