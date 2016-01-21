@@ -1,30 +1,32 @@
 import MrcPlayer
 import MrcSettings
+import MrcFile
 
 class CmdPlayFileQuery:
     def __init__(self):
-        self.path=''
+        self.fileid=''
 
 class CmdPlayFileReply:
     def __init__(self):
         self.error=''
 
 class CmdPlayFile:
-    def __init__(self, path):
+    def __init__(self, fileid):
         self.query=CmdPlayFileQuery()
-        self.query.path=path
+        self.query.fileid=fileid
         self.reply=CmdPlayFileReply()
 
     def process(self):
         try:
-            ismusicfile=False
-            for ext in MrcSettings.MUSIC_FILE_EXTENSIONS:
-                if self.query.path.lower().endswith(ext):
-                    ismusicfile=True
-                    break
-            if ismusicfile:
-                MrcPlayer.instance().playFile(MrcSettings.BASE_MUSIC_PATH+self.query.path)
+            currentFile=MrcFile.MrcFile('', True, False)
+            if self.query.fileid:
+                currentFile=MrcFile.getFromFileCache(self.query.fileid)
+            if not currentFile.path:
+                MrcLogger.error('failed to get file from cache with file id '+self.query.fileid)
+                self.error='failed to get file from cache with file id '+self.query.fileid
+            if currentFile.ismusicfile:
+                MrcPlayer.instance().playFile(MrcSettings.BASE_MUSIC_PATH+currentFile.path)
             else:
-                self.reply.error="not a music file: "+self.query.path
+                self.reply.error='not a music file: '+currentFile.path
         except Exception as e:
             self.reply.error=e.__str__()

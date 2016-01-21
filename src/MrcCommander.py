@@ -32,28 +32,28 @@ class MrcCommander:
             return
 
         if self.cmd['command']=='Browse':
-            if 'path' not in self.cmd:
-                MrcLogger.error('MrcCommander failed to parse CmdBrowse incoming query: no "path" key!')
+            if 'fileid' not in self.cmd:
+                MrcLogger.error('MrcCommander failed to parse CmdBrowse incoming query: no "fileid" key!')
                 return
-            c=CmdBrowse(self.cmd['path'])
+            c=CmdBrowse(self.cmd['fileid'])
             c.process()
             self.res=jsonpickle.encode(c.reply, unpicklable=False)
             return
 
         if self.cmd['command']=='PlayFile':
-            if 'path' not in self.cmd:
-                MrcLogger.error('MrcCommander failed to parse CmdPlayFile incoming query: no "path" key!')
+            if 'fileid' not in self.cmd:
+                MrcLogger.error('MrcCommander failed to parse CmdPlayFile incoming query: no "fileid" key!')
                 return
-            c=CmdPlayFile(self.cmd['path'])
+            c=CmdPlayFile(self.cmd['fileid'])
             c.process()
             self.res=jsonpickle.encode(c.reply, unpicklable=False)
             return
 
         if self.cmd['command']=='PlayDir':
-            if 'path' not in self.cmd:
-                MrcLogger.error('MrcCommander failed to parse CmdPlayDir incoming query: no "path" key!')
+            if 'fileid' not in self.cmd:
+                MrcLogger.error('MrcCommander failed to parse CmdPlayDir incoming query: no "fileid" key!')
                 return
-            c=CmdPlayDir(self.cmd['path'])
+            c=CmdPlayDir(self.cmd['fileid'])
             c.process()
             self.res=jsonpickle.encode(c.reply, unpicklable=False)
             return
@@ -99,4 +99,3 @@ class MrcCommander:
             c.process()
             self.res=jsonpickle.encode(c.reply, unpicklable=False)
             return
-
