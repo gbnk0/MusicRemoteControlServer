@@ -58,5 +58,5 @@ class CmdPlayDir:
                 if f.isdir:
                     self.gatherMusicFiles(f)
                 elif f.ismusicfile:
-                    self.files.append(MrcSettings.BASE_MUSIC_PATH+f.path) 
+                    self.files.append(f) 
 

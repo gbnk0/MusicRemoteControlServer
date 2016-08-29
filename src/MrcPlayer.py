@@ -46,28 +46,28 @@ class MrcPlayer:
         except Exception as e:
             MrcLogger.error('Exception caught in MrcPlayer.goToSleep: '+e.__str__())
 
-    def playFile(self, filepath):
+    def playFile(self, mrcfile):
         try:
             with self.lock:
                 if not self.wokenUp:
                     MrcLogger.error('MrcPlayer.playFile called while wokenUp is False! Not playing...')
                     return
                 self.playlist.clean()
-                self.playlist.addFile(filepath)
+                self.playlist.addFile(mrcfile)
                 self.playCurrent()
         except pygame.error as e:
             MrcLogger.error('pygame.error caught in MrcPlayer.playFile('+filepath+'): '+e.__str__())
         except Exception as e:
             MrcLogger.error('Exception caught in MrcPlayer.playFile('+filepath+'): '+e.__str__())
 
-    def playFiles(self, filePaths):
+    def playFiles(self, mrcfiles):
         try:
             with self.lock:
                 if not self.wokenUp:
                     MrcLogger.error('MrcPlayer.playFiles called while wokenUp is False! Not playing...')
                     return
                 self.playlist.clean()
-                self.playlist.addFileList(filePaths)
+                self.playlist.addFileList(mrcfiles)
                 self.playCurrent()
         except pygame.error as e:
             MrcLogger.error('pygame.error caught in MrcPlayer.playFiles: '+e.__str__())
@@ -176,8 +176,9 @@ class MrcPlayer:
                     return None, -1, False, 'Player not woken up, please try again later'
                 files = []
                 for f in self.playlist.files:
-                    if f.startswith(MrcSettings.BASE_MUSIC_PATH):
-                          files.append(f[len(MrcSettings.BASE_MUSIC_PATH):])  
+                    files.append(f)
+                    if files[len(files)-1].path.startswith(MrcSettings.BASE_MUSIC_PATH):
+                          files[len(files)-1].path=files[len(files)-1].path[len(MrcSettings.BASE_MUSIC_PATH):]
                 return files, self.playlist.current, self.pausing, ''
         except pygame.error as e:
             MrcLogger.error('pygame.error caught in MrcPlayer.getPlayList: '+e.__str__())

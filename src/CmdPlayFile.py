@@ -25,7 +25,7 @@ class CmdPlayFile:
                 MrcLogger.error('failed to get file from cache with file id '+self.query.fileid)
                 self.error='failed to get file from cache with file id '+self.query.fileid
             if currentFile.ismusicfile:
-                MrcPlayer.instance().playFile(MrcSettings.BASE_MUSIC_PATH+currentFile.path)
+                MrcPlayer.instance().playFile(currentFile)
             else:
                 self.reply.error='not a music file: '+currentFile.path
         except Exception as e:

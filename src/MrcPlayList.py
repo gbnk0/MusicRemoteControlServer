@@ -1,4 +1,5 @@
 import threading
+import MrcSettings
 
 class MrcPlayList:
 
@@ -54,6 +55,6 @@ class MrcPlayList:
     def getCurrentFileName(self):
         with self.lock:
             if self.files and self.current>=0 and self.current<len(self.files):
-                return self.files[self.current]
+                return MrcSettings.BASE_MUSIC_PATH+self.files[self.current].path
             else:
                 return None
